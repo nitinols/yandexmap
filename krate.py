@@ -38,19 +38,29 @@ while True:
     with open(map_file, "wb") as file:
         file.write(response.content)
 
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                if m < 7:
-                    m += 1
-                    print(m)
-            elif event.key == pygame.K_DOWN:
-                if m > 0.5:
-                    m -= 1
-                    print(m)
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_UP]:
+        if -90 <= h <= 90:
+            h += 0.25
+    elif keys[pygame.K_DOWN]:
+        if -90 <= h <= 90:
+            h -= 0.25
+    if keys[pygame.K_LEFT]:
+        if -180 <= w <= 180:
+            w -= 0.5
+    elif keys[pygame.K_RIGHT]:
+        if -180 <= w <= 180:
+            w += 0.5
+    if keys[pygame.K_MINUS]:
+        if 0.5 <= m:
+            m -= 1
+    elif keys[pygame.K_EQUALS]:
+        if m <= 8:
+            m += 1
 
     screen.fill(BLACK)
     screen.blit(pygame.transform.scale(pygame.image.load(map_file), (720, 480)), (0, 0))
